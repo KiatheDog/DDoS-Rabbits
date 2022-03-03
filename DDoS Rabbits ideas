@@ -1,0 +1,24 @@
+DB_FILENAME = os.path.realpath("data/test.db")  # 👈 Where the SQLite database file will be generated
+
+
+def _get_connection() -> sqlite3.Connection:
+    ...
+
+@contextlib.contextmanager
+def connection_context():
+    ...
+
+def get_challenges_for_candidate(cpf: str) -> List[Any]:  # 👈 Returns the list of challenges submitted
+    query = f"""
+        SELECT title, score FROM challenges c
+        JOIN users u
+        ON u.id = c.user_id
+        WHERE u.cpf='{cpf}';
+    """
+    ...
+
+    with connection_context() as cur:
+        cur.execute(query)
+        results = cur.fetchall()
+
+        return results
